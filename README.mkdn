@@ -1,0 +1,44 @@
+# NAME
+
+UNIVERSAL::tap - Ruby's tap()
+
+# SYNOPSIS
+
+    use UNIVERSAL::tap;
+
+    package MyClass;
+    use base 'Class::Accessor::Fast';
+    __PACKAGE__->mk_accessors('foo', 'bar');
+
+    package main;
+
+    my $obj = MyClass->new->tap(sub {
+        my $self = shift;
+        $self->foo('baz');
+        $self->bar('quux');
+    });
+
+    print $obj->foo; # => 'baz'
+    print $obj->bar; # => 'quux'
+
+# DESCRIPTION
+
+This module exports tap() into every modules.
+
+# METHODS
+
+## tap
+
+This method evaluates code block with instance as an argument,
+and returns instance.
+
+    $module->tap(sub { ... })->method_defined_in_module;
+
+# AUTHOR
+
+NAKAGAWA Masaki <masaki@cpan.org>
+
+# LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

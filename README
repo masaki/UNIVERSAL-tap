@@ -1,27 +1,38 @@
-This is Perl module UNIVERSAL::tap.
+NAME
+    UNIVERSAL::tap - Ruby's tap()
 
-INSTALLATION
+SYNOPSIS
+        use UNIVERSAL::tap;
 
-UNIVERSAL::tap installation is straightforward. If your CPAN shell is set up,
-you should just be able to do
+        package MyClass;
+        use base 'Class::Accessor::Fast';
+        __PACKAGE__->mk_accessors('foo', 'bar');
 
-    % cpan UNIVERSAL::tap
+        package main;
 
-Download it, unpack it, then build it as per the usual:
+        my $obj = MyClass->new->tap(sub {
+            my $self = shift;
+            $self->foo('baz');
+            $self->bar('quux');
+        });
 
-    % perl Makefile.PL
-    % make && make test
+        print $obj->foo; # => 'baz'
+        print $obj->bar; # => 'quux'
 
-Then install it:
+DESCRIPTION
+    This module exports tap() into every modules.
 
-    % make install
+METHODS
+  tap
+    This method evaluates code block with instance as an argument, and
+    returns instance.
 
-DOCUMENTATION
+        $module->tap(sub { ... })->method_defined_in_module;
 
-UNIVERSAL::tap documentation is available as in POD. So you can do:
+AUTHOR
+    NAKAGAWA Masaki <masaki@cpan.org>
 
-    % perldoc UNIVERSAL::tap
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
 
-to read the documentation online with your favorite pager.
-
-NAKAGAWA Masaki
